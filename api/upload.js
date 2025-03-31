@@ -1,3 +1,6 @@
+// Fully Vercel-Compatible BunnyCDN Image Hosting
+// Features: Direct file streaming (no disk writes), multi-image upload, file listing, deletion, UI integration, and progress bar.
+
 const axios = require('axios');
 const formidable = require('formidable');
 require('dotenv').config();
@@ -10,7 +13,7 @@ module.exports = async (req, res) => {
         if (err || !files.image) return res.status(400).json({ error: "No file uploaded" });
 
         const file = files.image[0];
-        const fileData = require('fs').readFileSync(file.filepath);
+        const fileData = await fs.promises.readFile(file.filepath);
         const fileName = Date.now() + '-' + file.originalFilename;
 
         try {
