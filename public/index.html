@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Hosting</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, button { margin: 10px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Upload Image</h1>
+    <input type="file" id="imageInput">
+    <button onclick="uploadImage()">Upload</button>
+    <div id="output"></div>
+
+    <script>
+        async function uploadImage() {
+            let formData = new FormData();
+            let fileInput = document.getElementById('imageInput');
+            formData.append('image', fileInput.files[0]);
+
+            let response = await fetch('/upload', { method: 'POST', body: formData });
+            let data = await response.json();
+            document.getElementById('output').innerHTML = `<p><a href="${data.url}" target="_blank">${data.url}</a></p>`;
+        }
+    </script>
+</body>
+</html>
